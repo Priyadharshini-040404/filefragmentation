@@ -1,17 +1,13 @@
 ﻿using System;
 using System.IO;
-
 namespace FileFragmentationMVC.Models
 {
     public class FileModel
     {
-        // Data folder in project root
         private readonly string _dataFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Data");
-
         public string InputFile => Path.Combine(_dataFolder, "input.txt");
         public string OutputFile => Path.Combine(_dataFolder, "output.txt");
         public string FragmentFolder => Path.Combine(_dataFolder, "Fragments");
-
         public FileModel()
         {
             if (!Directory.Exists(_dataFolder))
@@ -19,7 +15,6 @@ namespace FileFragmentationMVC.Models
 
             ClearDataFolder();
         }
-
         private void ClearDataFolder()
         {
             DirectoryInfo di = new DirectoryInfo(_dataFolder);
@@ -30,22 +25,18 @@ namespace FileFragmentationMVC.Models
             foreach (DirectoryInfo dir in di.GetDirectories())
                 dir.Delete(true);
         }
-
         public void SaveParagraph(string paragraph)
         {
             File.WriteAllText(InputFile, paragraph);
         }
-
         public string[] FragmentFile(int fragmentSize)
         {
             if (!Directory.Exists(FragmentFolder))
                 Directory.CreateDirectory(FragmentFolder);
-
             string content = File.ReadAllText(InputFile);
             int totalFragments = (int)Math.Ceiling((double)content.Length / fragmentSize);
             int digits = totalFragments.ToString().Length;
             string[] fragmentFiles = new string[totalFragments];
-
             for (int i = 0; i < totalFragments; i++)
             {
                 int start = i * fragmentSize;
@@ -58,7 +49,6 @@ namespace FileFragmentationMVC.Models
 
             return fragmentFiles;
         }
-
         public void Reassemble(string[] fragmentFiles)
         {
             string reassembledData = "";
@@ -68,14 +58,12 @@ namespace FileFragmentationMVC.Models
             }
             File.WriteAllText(OutputFile, reassembledData);
         }
-
         public bool CompareFiles()
         {
             string originalData = File.ReadAllText(InputFile);
             string finalData = File.ReadAllText(OutputFile);
             return originalData == finalData;
         }
-
         public string ReadFragment(string fileName)
         {
             if (File.Exists(fileName))

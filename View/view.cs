@@ -1,5 +1,4 @@
 ﻿using System;
-
 namespace FileFragmentationMVC.Views
 {
     public class ConsoleView
@@ -8,20 +7,17 @@ namespace FileFragmentationMVC.Views
         {
             Console.WriteLine(message);
         }
-
         public void ShowColoredMessage(string message, ConsoleColor color)
         {
             Console.ForegroundColor = color;
             Console.WriteLine(message);
             Console.ResetColor();
         }
-
         public string GetInput(string prompt)
         {
             Console.WriteLine(prompt);
             return Console.ReadLine();
         }
-
         public void DisplayFragmentFiles(string[] files)
         {
             Console.WriteLine("\nCreated Fragment Files:");
@@ -30,7 +26,6 @@ namespace FileFragmentationMVC.Views
                 Console.WriteLine(file);
             }
         }
-
         public void DisplayContent(string header, string content)
         {
             Console.WriteLine($"\n{header}:\n{content}");
